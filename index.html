@@ -1,0 +1,66 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><style>body{margin:0}.bar{position:sticky;top:0}</style>
+<title>허석링 상세페이지</title>
+<style>
+/* Layout: slim sticky toolbar over a centered 1000px image column, with an optional phone-width preview */
+:root{
+  --bg:#E6E8EC; --bar:#FFFFFF; --fg:#16191D; --sub:#5B616B; --line:#D5D8DE; --accent:#2F5557; --accent-fg:#FFFFFF; --mint:#8FD9CB;
+  --font:"Pretendard","Noto Sans KR",system-ui,sans-serif; --mono:"IBM Plex Mono",ui-monospace,monospace;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#15161A;--bar:#1F2126;--fg:#ECEEF1;--sub:#A3A6AF;--line:#34363E;--accent:#8FD9CB;--accent-fg:#16191D;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#15161A;--bar:#1F2126;--fg:#ECEEF1;--sub:#A3A6AF;--line:#34363E;--accent:#8FD9CB;--accent-fg:#16191D;color-scheme:dark}
+body{background:var(--bg);color:var(--fg);font-family:var(--font)}
+.bar{position:sticky;top:env(safe-area-inset-top,0px);z-index:10;background:var(--bar);border-bottom:1px solid var(--line);padding:10px 16px}
+.bar-in{max-width:1000px;margin:0 auto;display:flex;flex-wrap:wrap;align-items:center;gap:10px 16px}
+.name{font-weight:700;font-size:15px;letter-spacing:-.01em}
+.name small{font-family:var(--mono);font-weight:500;font-size:11px;letter-spacing:.08em;color:var(--sub);margin-left:6px}
+nav{display:flex;gap:6px;overflow-x:auto;flex:1;min-width:0;scrollbar-width:none}
+nav a{flex:none;font-size:12.5px;color:var(--sub);text-decoration:none;padding:6px 11px;border-radius:999px;border:1px solid var(--line);white-space:nowrap}
+nav a.on{background:var(--accent);border-color:var(--accent);color:var(--accent-fg)}
+nav a:focus-visible,.seg button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.seg{display:flex;border:1px solid var(--line);border-radius:999px;padding:2px}
+.seg button{font:inherit;font-size:12.5px;border:0;background:none;color:var(--sub);padding:5px 12px;border-radius:999px;cursor:pointer}
+.seg button[aria-pressed="true"]{background:var(--fg);color:var(--bar)}
+.prog{position:absolute;left:0;bottom:-1px;height:2px;background:var(--accent);width:0}
+.wrap{padding:24px 16px 64px}
+.page{max-width:1000px;margin:0 auto;box-shadow:0 10px 40px rgba(16,20,28,.12);transition:max-width .35s ease}
+.page.mobile{max-width:390px;border-radius:28px;overflow:hidden;outline:8px solid var(--fg)}
+.page img{display:block;width:100%;height:auto}
+.foot{max-width:1000px;margin:20px auto 0;font-size:12px;color:var(--sub);text-align:center}
+@media (prefers-reduced-motion:reduce){.page{transition:none}}
+</style>
+</head><body>
+<header class="bar">
+  <div class="bar-in">
+    <div class="name">허석링<small>DETAIL PAGE</small></div>
+    <nav id="nav" aria-label="섹션 이동">
+      <a href="#s1">히어로 · 셀프체크</a><a href="#s2">스토리 · 원리</a><a href="#s6">로봇 테스트</a><a href="#s3">스윙 변화</a><a href="#s4">철학 · 요약</a><a href="#s5">사이즈 · 사양</a>
+    </nav>
+    <div class="seg" role="group" aria-label="미리보기 폭">
+      <button id="pc" aria-pressed="true">PC 1000</button><button id="mo" aria-pressed="false">모바일 390</button>
+    </div>
+  </div>
+  <div class="prog" id="prog"></div>
+</header>
+<main class="wrap">
+  <div class="page" id="page">
+    <img id="s1" src="s1.jpg" width="1000" height="2340" alt="01 Hero, 02 Self Check">
+    <img id="s2" src="s2.jpg" width="1000" height="3886" alt="03 Story, 04 Principle">
+    <img id="s6" src="robot.jpg" width="1000" height="2340" alt="04-1 Robot Swing Test">
+    <img id="s3" src="s3.jpg" width="1000" height="4552" alt="05–06 Points">
+    <img id="s4" src="s4.jpg" width="1000" height="3260" alt="07 Philosophy, 08 Summary">
+    <img id="s5" src="s5.jpg" width="1000" height="1700" alt="Configuration, Dimensions, Specs">
+  </div>
+  <p class="foot">Figma 프레임 6개를 이어 붙인 미리보기 · 총 18,078px</p>
+</main>
+<script>
+const page=document.getElementById('page'),pc=document.getElementById('pc'),mo=document.getElementById('mo');
+function setMode(m){page.classList.toggle('mobile',m);pc.setAttribute('aria-pressed',!m);mo.setAttribute('aria-pressed',m);try{localStorage.setItem('pdp-mode',m?'m':'p')}catch(e){}}
+pc.onclick=()=>setMode(false);mo.onclick=()=>setMode(true);
+try{if(localStorage.getItem('pdp-mode')==='m')setMode(true)}catch(e){}
+const links=[...document.querySelectorAll('#nav a')],imgs=links.map(a=>document.querySelector(a.getAttribute('href'))),prog=document.getElementById('prog');
+links.forEach((a,i)=>a.addEventListener('click',e=>{e.preventDefault();const y=imgs[i].getBoundingClientRect().top+scrollY-document.querySelector('.bar').offsetHeight;scrollTo({top:y,behavior:matchMedia('(prefers-reduced-motion:reduce)').matches?'auto':'smooth'})}));
+function onScroll(){const max=document.documentElement.scrollHeight-innerHeight;prog.style.width=(max>0?scrollY/max*100:0)+'%';
+ const mid=innerHeight*0.35;let cur=0;imgs.forEach((im,i)=>{if(im.getBoundingClientRect().top<mid)cur=i});links.forEach((a,i)=>a.classList.toggle('on',i===cur))}
+addEventListener('scroll',onScroll,{passive:true});addEventListener('resize',onScroll);onScroll();
+</script>
+</body></html>
