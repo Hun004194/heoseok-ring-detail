@@ -1,6 +1,12 @@
-<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><style>body{margin:0}.bar{position:sticky;top:0}</style>
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
 <title>허석링 상세페이지</title>
 <style>
+body{margin:0}
+
 /* Layout: slim sticky toolbar over a centered 1000px image column, with an optional phone-width preview */
 :root{
   --bg:#E6E8EC; --bar:#FFFFFF; --fg:#16191D; --sub:#5B616B; --line:#D5D8DE; --accent:#2F5557; --accent-fg:#FFFFFF; --mint:#8FD9CB;
@@ -28,12 +34,13 @@ nav a:focus-visible,.seg button:focus-visible{outline:2px solid var(--accent);ou
 .foot{max-width:1000px;margin:20px auto 0;font-size:12px;color:var(--sub);text-align:center}
 @media (prefers-reduced-motion:reduce){.page{transition:none}}
 </style>
-</head><body>
+</head>
+<body>
 <header class="bar">
   <div class="bar-in">
     <div class="name">허석링<small>DETAIL PAGE</small></div>
     <nav id="nav" aria-label="섹션 이동">
-      <a href="#s1">히어로 · 셀프체크</a><a href="#s2">스토리 · 원리</a><a href="#s6">로봇 테스트</a><a href="#s3">스윙 변화</a><a href="#s4">철학 · 요약</a><a href="#s5">사이즈 · 사양</a>
+      <a href="#s1">히어로 · 셀프체크</a><a href="#s2">문제 제기 · 철학</a><a href="#s3">스토리 · 원리</a><a href="#s4">스윙 변화</a><a href="#s5">로봇 테스트</a><a href="#s6">컬러 · 선물</a><a href="#s7">요약 · 사양</a>
     </nav>
     <div class="seg" role="group" aria-label="미리보기 폭">
       <button id="pc" aria-pressed="true">PC 1000</button><button id="mo" aria-pressed="false">모바일 390</button>
@@ -43,14 +50,15 @@ nav a:focus-visible,.seg button:focus-visible{outline:2px solid var(--accent);ou
 </header>
 <main class="wrap">
   <div class="page" id="page">
-    <img id="s1" src="s1.jpg" width="1000" height="2340" alt="01 Hero, 02 Self Check">
-    <img id="s2" src="s2.jpg" width="1000" height="3886" alt="03 Story, 04 Principle">
-    <img id="s6" src="robot.jpg" width="1000" height="2340" alt="04-1 Robot Swing Test">
-    <img id="s3" src="s3.jpg" width="1000" height="4552" alt="05–06 Points">
-    <img id="s4" src="s4.jpg" width="1000" height="3260" alt="07 Philosophy, 08 Summary">
-    <img id="s5" src="s5.jpg" width="1000" height="1700" alt="Configuration, Dimensions, Specs">
+    <img id="s1" src="01.jpg" width="1000" height="2340" alt="01 Hero - Self Check" loading="eager">
+    <img id="s2" src="02.jpg" width="1000" height="3350" alt="02 Intro - Philosophy" loading="eager">
+    <img id="s3" src="03.jpg" width="1000" height="3886" alt="03 Story - Principle" loading="lazy">
+    <img id="s4" src="04.jpg" width="1000" height="4446" alt="04 Swing Changes" loading="lazy">
+    <img id="s5" src="05.jpg" width="1000" height="2340" alt="05 Robot Swing Test" loading="lazy">
+    <img id="s6" src="06.jpg" width="1000" height="2465" alt="06 Color - Gift Package" loading="lazy">
+    <img id="s7" src="07.jpg" width="1000" height="3492" alt="07 Summary - Size - Specs" loading="lazy">
   </div>
-  <p class="foot">Figma 프레임 6개를 이어 붙인 미리보기 · 총 18,078px</p>
+  <p class="foot">Figma 프레임 7개를 이어 붙인 미리보기 · 총 22,319px</p>
 </main>
 <script>
 const page=document.getElementById('page'),pc=document.getElementById('pc'),mo=document.getElementById('mo');
@@ -63,4 +71,6 @@ function onScroll(){const max=document.documentElement.scrollHeight-innerHeight;
  const mid=innerHeight*0.35;let cur=0;imgs.forEach((im,i)=>{if(im.getBoundingClientRect().top<mid)cur=i});links.forEach((a,i)=>a.classList.toggle('on',i===cur))}
 addEventListener('scroll',onScroll,{passive:true});addEventListener('resize',onScroll);onScroll();
 </script>
-</body></html>
+
+</body>
+</html>
